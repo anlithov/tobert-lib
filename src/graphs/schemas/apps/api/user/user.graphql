@@ -1,0 +1,9 @@
+type UserMutations {
+    auth: UserAuthMutation
+    cexAccount: UserCexAccountMutation
+    password: UserPassMutation
+}
+
+extend type Mutation {
+    user: UserMutations
+}

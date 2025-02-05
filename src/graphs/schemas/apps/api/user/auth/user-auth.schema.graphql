@@ -1,0 +1,24 @@
+input UserLoginInput {
+    nick: String!
+    password: String!
+}
+
+input UserRegisterInput  {
+    nick: String!
+    password: String!
+    confirmPassword: String!
+}
+
+type UserMeta {
+    id: ID
+    nick: String
+}
+type UserAuthed {
+    userMeta: UserMeta
+    jwtToken: String
+}
+
+type UserAuthMutation {
+    login(input: UserLoginInput): UserAuthed
+    register(input: UserLoginInput): UserAuthed
+}

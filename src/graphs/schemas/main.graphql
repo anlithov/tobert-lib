@@ -1,0 +1,10 @@
+input HealthCheckHiInput {
+    message: String!
+}
+
+type Mutation {
+    healthHi(input: HealthCheckHiInput): String
+}
+extend type Query {
+    health: String
+}
