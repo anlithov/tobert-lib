@@ -1,4 +1,4 @@
-import * as graphTypesApi from "./graphs/types/apps/api/graphql.ts";
+import * as graphTypesApi from "./graph-schemas/types/apps/api/graphql.ts";
 import {JWT_HEADER_KEYS} from "./common/constants/jwt-header-keys.ts";
 
 const common = {
