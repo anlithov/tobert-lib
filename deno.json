@@ -3,9 +3,9 @@
   "version": "0.1.3",
   "license": "MIT",
   "exports": {
-    "./common/*": "./src/common/*",
-    "./api/*": "./src/api/*",
-    "./admin/*": "./src/admin/*"
+    "./common": "./src/common/index.ts",
+    "./api": "./src/api/index.ts",
+    "./admin": "./src/admin/index.ts"
   },
   "tasks": {
     "codegen:api": "deno run -A npm:@graphql-codegen/cli@5.0.4/graphql-codegen --config codegen-api.ts",
