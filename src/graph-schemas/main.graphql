@@ -5,6 +5,6 @@ input HealthCheckHiInput {
 type Mutation {
     healthHi(input: HealthCheckHiInput): String
 }
-extend type Query {
+type Query {
     health: String
 }

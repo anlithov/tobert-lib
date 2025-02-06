@@ -3,33 +3,33 @@ export const apiTypeDefs: string = `schema {
 }
 
 type Mutation {
-  user: UserMutations
+  user: UserMutations!
 }
 
 type UserAuthMutation {
-  login(input: UserLoginInput): UserAuthed
-  register(input: UserLoginInput): UserAuthed
+  login(input: UserLoginInput!): UserAuthed!
+  register(input: UserLoginInput!): UserAuthed!
 }
 
 type UserAuthed {
-  jwtToken: String
-  userMeta: UserMeta
+  jwtToken: String!
+  userMeta: UserMeta!
 }
 
 type UserCexAccountMutation {
-  addAccount(input: UserLoginInput): UserId @auth
-  editAccount(input: UserLoginInput): UserId @auth
-  removeAccount(input: UserLoginInput): UserId @auth
+  addAccount(input: UserLoginInput!): UserId
+  editAccount(input: UserLoginInput!): UserId
+  removeAccount(input: UserLoginInput!): UserId
 }
 
 input UserChangePasswordInput {
   confirmPassword: String!
-  id: ID
+  id: ID!
   password: String!
 }
 
 type UserId {
-  id: ID
+  id: ID!
 }
 
 input UserLoginInput {
@@ -38,18 +38,18 @@ input UserLoginInput {
 }
 
 type UserMeta {
-  id: ID
-  nick: String
+  id: ID!
+  nick: String!
 }
 
 type UserMutations {
-  auth: UserAuthMutation
-  cexAccount: UserCexAccountMutation
-  password: UserPassMutation
+  auth: UserAuthMutation!
+  cexAccount: UserCexAccountMutation!
+  password: UserPassMutation!
 }
 
 type UserPassMutation {
-  changePassword(input: UserLoginInput): UserId
+  changePassword(input: UserLoginInput!): UserId!
 }
 
 input UserRegisterInput {

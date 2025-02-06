@@ -10,15 +10,15 @@ input UserRegisterInput  {
 }
 
 type UserMeta {
-    id: ID
-    nick: String
+    id: ID!
+    nick: String!
 }
 type UserAuthed {
-    userMeta: UserMeta
-    jwtToken: String
+    userMeta: UserMeta!
+    jwtToken: String!
 }
 
 type UserAuthMutation {
-    login(input: UserLoginInput): UserAuthed
-    register(input: UserLoginInput): UserAuthed
+    login(input: UserLoginInput!): UserAuthed!
+    register(input: UserLoginInput!): UserAuthed!
 }

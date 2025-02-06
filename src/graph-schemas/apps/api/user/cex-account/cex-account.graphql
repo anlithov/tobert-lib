@@ -1,7 +1,7 @@
 
 
 type UserCexAccountMutation {
-    addAccount(input: UserLoginInput): UserId @auth
-    editAccount(input: UserLoginInput): UserId @auth
-    removeAccount(input: UserLoginInput): UserId @auth
+    addAccount(input: UserLoginInput!): UserId
+    editAccount(input: UserLoginInput!): UserId
+    removeAccount(input: UserLoginInput!): UserId
 }
