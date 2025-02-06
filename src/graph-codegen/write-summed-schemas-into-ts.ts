@@ -1,8 +1,8 @@
-export const writeSummedSchemasIntoTs = async (filePath: string) => {
+export const writeSummedSchemasIntoTs = async (filePath: string, constName: string) => {
   const sdl = await Deno.readTextFile(filePath);
 
   const tsFilePath = filePath + ".ts";
-  const tsContent = `export const typeDefs: string = \`${sdl}\`;\n`;
+  const tsContent = `export const ${constName}: string = \`${sdl}\`;\n`;
 
   // 3) Write the TS file
   await Deno.writeTextFile(tsFilePath, tsContent);

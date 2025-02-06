@@ -13,7 +13,7 @@ const config: CodegenConfig = {
         includeDirectives: true,
       } as SchemaASTConfig,
       hooks: {
-        afterOneFileWrite: [writeSummedSchemasIntoTs],
+        afterOneFileWrite: [(file) => writeSummedSchemasIntoTs(file, 'apiTypeDefs')],
       },
     },
     "src/api/types/graphql.ts": {
