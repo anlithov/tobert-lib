@@ -1,4 +1,4 @@
-export const typeDefs = `schema {
+export const typeDefs: string = `schema {
   mutation: Mutation
 }
 
