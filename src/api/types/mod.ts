@@ -1,1 +1,1 @@
-export * from './graphql.ts';
+export * from "./graphql.ts";

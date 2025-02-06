@@ -1,1 +1,1 @@
-export * from "./jwt-header-keys.ts"
+export * from "./jwt-header-keys.ts";
