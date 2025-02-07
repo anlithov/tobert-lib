@@ -11,7 +11,7 @@ type UserAuthMutation {
   register(input: UserLoginInput!): UserAuthed!
 }
 
-interface UserAuthed {
+type UserAuthed {
   jwtToken: String!
   userMeta: UserMeta!
 }
@@ -37,7 +37,7 @@ input UserLoginInput {
   password: String!
 }
 
-interface UserMeta {
+type UserMeta {
   id: ID!
   nick: String!
 }

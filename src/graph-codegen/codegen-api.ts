@@ -24,7 +24,6 @@ const config: CodegenConfig = {
         avoidOptionals: true,
         allResolversTypeName: 'ApiResolvers',
         resolverTypeWrapperSignature: "T",
-        onlyResolveTypeForInterfaces: true,
         skipTypename: true,
         allowParentTypeOverride: true,
       } as TypeScriptResolversPluginConfig,

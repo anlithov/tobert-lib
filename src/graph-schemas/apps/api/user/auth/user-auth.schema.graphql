@@ -9,11 +9,11 @@ input UserRegisterInput  {
     confirmPassword: String!
 }
 
-interface UserMeta {
+type UserMeta {
     id: ID!
     nick: String!
 }
-interface UserAuthed {
+type UserAuthed {
     userMeta: UserMeta!
     jwtToken: String!
 }
