@@ -18,7 +18,7 @@ type UserAuthed {
     jwtToken: String!
 }
 
-type UserAuthMutation {
+type UserAuthMutations {
     login(input: UserLoginInput!): UserAuthed!
     register(input: UserLoginInput!): UserAuthed!
 }

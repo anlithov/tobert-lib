@@ -13,7 +13,9 @@ const config: CodegenConfig = {
         includeDirectives: true,
       } as SchemaASTConfig,
       hooks: {
-        afterOneFileWrite: [(file) => writeSummedSchemasIntoTs(file, 'adminTypeDefs')],
+        afterOneFileWrite: [
+          (file) => writeSummedSchemasIntoTs(file, "adminTypeDefs"),
+        ],
       },
     },
     "src/admin/types/graphql.ts": {

@@ -3,6 +3,7 @@ import type { TypeScriptResolversPluginConfig } from "@graphql-codegen/typescrip
 import type { SchemaASTConfig } from "@graphql-codegen/schema-ast";
 import { writeSummedSchemasIntoTs } from "./write-summed-schemas-into-ts.ts";
 
+
 const config: CodegenConfig = {
   schema: "src/graph-schemas/apps/api/**/*.graphql",
   generates: {
@@ -13,7 +14,9 @@ const config: CodegenConfig = {
         includeDirectives: true,
       } as SchemaASTConfig,
       hooks: {
-        afterOneFileWrite: [(file) => writeSummedSchemasIntoTs(file, 'apiTypeDefs')],
+        afterOneFileWrite: [
+          (file) => writeSummedSchemasIntoTs(file, "apiTypeDefs"),
+        ],
       },
     },
     "src/api/types/graphql.ts": {
@@ -22,10 +25,11 @@ const config: CodegenConfig = {
         contextType: "./context.ts#ApiContext",
         useTypeImports: true,
         avoidOptionals: true,
-        allResolversTypeName: 'ApiResolvers',
+        allResolversTypeName: "ApiResolvers",
         resolverTypeWrapperSignature: "T",
         skipTypename: true,
         allowParentTypeOverride: true,
+        noSchemaStitching: false
       } as TypeScriptResolversPluginConfig,
     },
   },
