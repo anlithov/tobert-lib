@@ -21,6 +21,12 @@ const config: CodegenConfig = {
       config: {
         contextType: "./context.ts#ApiContext",
         useTypeImports: true,
+        avoidOptionals: true,
+        allResolversTypeName: 'ApiResolvers',
+        resolverTypeWrapperSignature: "T",
+        onlyResolveTypeForInterfaces: true,
+        skipTypename: true,
+        allowParentTypeOverride: true,
       } as TypeScriptResolversPluginConfig,
     },
   },

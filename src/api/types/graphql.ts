@@ -7,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -18,12 +19,10 @@ export type Scalars = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   user: UserMutations;
 };
 
 export type UserAuthMutation = {
-  __typename?: 'UserAuthMutation';
   login: UserAuthed;
   register: UserAuthed;
 };
@@ -39,16 +38,14 @@ export type UserAuthMutationRegisterArgs = {
 };
 
 export type UserAuthed = {
-  __typename?: 'UserAuthed';
   jwtToken: Scalars['String']['output'];
   userMeta: UserMeta;
 };
 
 export type UserCexAccountMutation = {
-  __typename?: 'UserCexAccountMutation';
-  addAccount?: Maybe<UserId>;
-  editAccount?: Maybe<UserId>;
-  removeAccount?: Maybe<UserId>;
+  addAccount: Maybe<UserId>;
+  editAccount: Maybe<UserId>;
+  removeAccount: Maybe<UserId>;
 };
 
 
@@ -73,7 +70,6 @@ export type UserChangePasswordInput = {
 };
 
 export type UserId = {
-  __typename?: 'UserId';
   id: Scalars['ID']['output'];
 };
 
@@ -83,20 +79,17 @@ export type UserLoginInput = {
 };
 
 export type UserMeta = {
-  __typename?: 'UserMeta';
   id: Scalars['ID']['output'];
   nick: Scalars['String']['output'];
 };
 
 export type UserMutations = {
-  __typename?: 'UserMutations';
   auth: UserAuthMutation;
   cexAccount: UserCexAccountMutation;
   password: UserPassMutation;
 };
 
 export type UserPassMutation = {
-  __typename?: 'UserPassMutation';
   changePassword: UserId;
 };
 
@@ -113,7 +106,7 @@ export type UserRegisterInput = {
 
 
 
-export type ResolverTypeWrapper<T> = Promise<T> | T;
+export type ResolverTypeWrapper<T> = T;
 
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
@@ -179,6 +172,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
+  UserAuthed: never;
+  UserMeta: never;
+};
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
@@ -186,14 +184,14 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  UserAuthMutation: ResolverTypeWrapper<UserAuthMutation>;
-  UserAuthed: ResolverTypeWrapper<UserAuthed>;
+  UserAuthMutation: ResolverTypeWrapper<Omit<UserAuthMutation, 'login' | 'register'> & { login: ResolversTypes['UserAuthed'], register: ResolversTypes['UserAuthed'] }>;
+  UserAuthed: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['UserAuthed']>;
   UserCexAccountMutation: ResolverTypeWrapper<UserCexAccountMutation>;
   UserChangePasswordInput: UserChangePasswordInput;
   UserId: ResolverTypeWrapper<UserId>;
   UserLoginInput: UserLoginInput;
-  UserMeta: ResolverTypeWrapper<UserMeta>;
-  UserMutations: ResolverTypeWrapper<UserMutations>;
+  UserMeta: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['UserMeta']>;
+  UserMutations: ResolverTypeWrapper<Omit<UserMutations, 'auth'> & { auth: ResolversTypes['UserAuthMutation'] }>;
   UserPassMutation: ResolverTypeWrapper<UserPassMutation>;
   UserRegisterInput: UserRegisterInput;
 };
@@ -204,72 +202,68 @@ export type ResolversParentTypes = {
   ID: Scalars['ID']['output'];
   Mutation: {};
   String: Scalars['String']['output'];
-  UserAuthMutation: UserAuthMutation;
-  UserAuthed: UserAuthed;
+  UserAuthMutation: Omit<UserAuthMutation, 'login' | 'register'> & { login: ResolversParentTypes['UserAuthed'], register: ResolversParentTypes['UserAuthed'] };
+  UserAuthed: ResolversInterfaceTypes<ResolversParentTypes>['UserAuthed'];
   UserCexAccountMutation: UserCexAccountMutation;
   UserChangePasswordInput: UserChangePasswordInput;
   UserId: UserId;
   UserLoginInput: UserLoginInput;
-  UserMeta: UserMeta;
-  UserMutations: UserMutations;
+  UserMeta: ResolversInterfaceTypes<ResolversParentTypes>['UserMeta'];
+  UserMutations: Omit<UserMutations, 'auth'> & { auth: ResolversParentTypes['UserAuthMutation'] };
   UserPassMutation: UserPassMutation;
   UserRegisterInput: UserRegisterInput;
 };
 
-export type MutationResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  user?: Resolver<ResolversTypes['UserMutations'], ParentType, ContextType>;
+export type MutationResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['Mutation']> = {
+  user: Resolver<ResolversTypes['UserMutations'], ParentType, ContextType>;
 };
 
-export type UserAuthMutationResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserAuthMutation'] = ResolversParentTypes['UserAuthMutation']> = {
-  login?: Resolver<ResolversTypes['UserAuthed'], ParentType, ContextType, RequireFields<UserAuthMutationLoginArgs, 'input'>>;
-  register?: Resolver<ResolversTypes['UserAuthed'], ParentType, ContextType, RequireFields<UserAuthMutationRegisterArgs, 'input'>>;
+export type UserAuthMutationResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserAuthMutation']> = {
+  login: Resolver<ResolversTypes['UserAuthed'], ParentType, ContextType, RequireFields<UserAuthMutationLoginArgs, 'input'>>;
+  register: Resolver<ResolversTypes['UserAuthed'], ParentType, ContextType, RequireFields<UserAuthMutationRegisterArgs, 'input'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserAuthedResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserAuthed'] = ResolversParentTypes['UserAuthed']> = {
-  jwtToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  userMeta?: Resolver<ResolversTypes['UserMeta'], ParentType, ContextType>;
+export type UserAuthedResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserAuthed']> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+};
+
+export type UserCexAccountMutationResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserCexAccountMutation']> = {
+  addAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationAddAccountArgs, 'input'>>;
+  editAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationEditAccountArgs, 'input'>>;
+  removeAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationRemoveAccountArgs, 'input'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserCexAccountMutationResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserCexAccountMutation'] = ResolversParentTypes['UserCexAccountMutation']> = {
-  addAccount?: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationAddAccountArgs, 'input'>>;
-  editAccount?: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationEditAccountArgs, 'input'>>;
-  removeAccount?: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountMutationRemoveAccountArgs, 'input'>>;
+export type UserIdResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserId']> = {
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserIdResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserId'] = ResolversParentTypes['UserId']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+export type UserMetaResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserMeta']> = {
+  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+};
+
+export type UserMutationsResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserMutations']> = {
+  auth: Resolver<ResolversTypes['UserAuthMutation'], ParentType, ContextType>;
+  cexAccount: Resolver<ResolversTypes['UserCexAccountMutation'], ParentType, ContextType>;
+  password: Resolver<ResolversTypes['UserPassMutation'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserMetaResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserMeta'] = ResolversParentTypes['UserMeta']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  nick?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type UserPassMutationResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserPassMutation']> = {
+  changePassword: Resolver<ResolversTypes['UserId'], ParentType, ContextType, RequireFields<UserPassMutationChangePasswordArgs, 'input'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserMutationsResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserMutations'] = ResolversParentTypes['UserMutations']> = {
-  auth?: Resolver<ResolversTypes['UserAuthMutation'], ParentType, ContextType>;
-  cexAccount?: Resolver<ResolversTypes['UserCexAccountMutation'], ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['UserPassMutation'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserPassMutationResolvers<ContextType = ApiContext, ParentType extends ResolversParentTypes['UserPassMutation'] = ResolversParentTypes['UserPassMutation']> = {
-  changePassword?: Resolver<ResolversTypes['UserId'], ParentType, ContextType, RequireFields<UserPassMutationChangePasswordArgs, 'input'>>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Resolvers<ContextType = ApiContext> = {
-  Mutation?: MutationResolvers<ContextType>;
-  UserAuthMutation?: UserAuthMutationResolvers<ContextType>;
-  UserAuthed?: UserAuthedResolvers<ContextType>;
-  UserCexAccountMutation?: UserCexAccountMutationResolvers<ContextType>;
-  UserId?: UserIdResolvers<ContextType>;
-  UserMeta?: UserMetaResolvers<ContextType>;
-  UserMutations?: UserMutationsResolvers<ContextType>;
-  UserPassMutation?: UserPassMutationResolvers<ContextType>;
+export type ApiResolvers<ContextType = ApiContext> = {
+  Mutation: MutationResolvers<ContextType>;
+  UserAuthMutation: UserAuthMutationResolvers<ContextType>;
+  UserAuthed: UserAuthedResolvers<ContextType>;
+  UserCexAccountMutation: UserCexAccountMutationResolvers<ContextType>;
+  UserId: UserIdResolvers<ContextType>;
+  UserMeta: UserMetaResolvers<ContextType>;
+  UserMutations: UserMutationsResolvers<ContextType>;
+  UserPassMutation: UserPassMutationResolvers<ContextType>;
 };
 
