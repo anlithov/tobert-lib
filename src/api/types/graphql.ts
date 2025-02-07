@@ -41,35 +41,13 @@ export type UserAuthed = {
   userMeta: UserMeta;
 };
 
-export type UserCexAccountActions = {
-  addAccount: Maybe<UserId>;
-  editAccount: Maybe<UserId>;
-  removeAccount: Maybe<UserId>;
-};
-
-
-export type UserCexAccountActionsAddAccountArgs = {
-  input: UserLoginInput;
-};
-
-
-export type UserCexAccountActionsEditAccountArgs = {
-  input: UserLoginInput;
-};
-
-
-export type UserCexAccountActionsRemoveAccountArgs = {
-  input: UserLoginInput;
-};
-
 export type UserChangePasswordInput = {
   confirmPassword: Scalars['String']['input'];
-  id: Scalars['ID']['input'];
   password: Scalars['String']['input'];
 };
 
 export type UserId = {
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
 };
 
 export type UserLoginInput = {
@@ -78,13 +56,12 @@ export type UserLoginInput = {
 };
 
 export type UserMeta = {
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   nick: Scalars['String']['output'];
 };
 
 export type UserMutations = {
   auth: UserAuthActions;
-  cexAccount: UserCexAccountActions;
   password: UserPassActions;
 };
 
@@ -189,12 +166,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UserAuthActions: ResolverTypeWrapper<UserAuthActions>;
   UserAuthed: ResolverTypeWrapper<UserAuthed>;
-  UserCexAccountActions: ResolverTypeWrapper<UserCexAccountActions>;
   UserChangePasswordInput: UserChangePasswordInput;
   UserId: ResolverTypeWrapper<UserId>;
   UserLoginInput: UserLoginInput;
@@ -207,12 +183,11 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
-  ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
   Mutation: {};
   String: Scalars['String']['output'];
   UserAuthActions: UserAuthActions;
   UserAuthed: UserAuthed;
-  UserCexAccountActions: UserCexAccountActions;
   UserChangePasswordInput: UserChangePasswordInput;
   UserId: UserId;
   UserLoginInput: UserLoginInput;
@@ -238,27 +213,19 @@ export type UserAuthedResolvers<ContextType = ApiContext, ParentType = Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserCexAccountActionsResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserCexAccountActions']> = {
-  addAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountActionsAddAccountArgs, 'input'>>;
-  editAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountActionsEditAccountArgs, 'input'>>;
-  removeAccount: Resolver<Maybe<ResolversTypes['UserId']>, ParentType, ContextType, RequireFields<UserCexAccountActionsRemoveAccountArgs, 'input'>>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type UserIdResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserId']> = {
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserMetaResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserMeta']> = {
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nick: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserMutationsResolvers<ContextType = ApiContext, ParentType = ResolversParentTypes['UserMutations']> = {
   auth: Resolver<ResolversTypes['UserAuthActions'], ParentType, ContextType>;
-  cexAccount: Resolver<ResolversTypes['UserCexAccountActions'], ParentType, ContextType>;
   password: Resolver<ResolversTypes['UserPassActions'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -272,14 +239,12 @@ export type ApiAllTypes<ContextType = ApiContext> = {
   Mutation: MutationResolvers<ContextType>;
   UserAuthActions: UserAuthActionsResolvers<ContextType>;
   UserAuthed: UserAuthedResolvers<ContextType>;
-  UserCexAccountActions: UserCexAccountActionsResolvers<ContextType>;
   UserId: UserIdResolvers<ContextType>;
   UserMeta: UserMetaResolvers<ContextType>;
   UserMutations: UserMutationsResolvers<ContextType>;
   UserPassActions: UserPassActionsResolvers<ContextType>;
 };
 
-export type ApiResolvers = Pick<ApiAllTypes, 'UserAuthActions' | 'UserCexAccountActions' | 'UserPassActions'>
+export type ApiResolvers = Pick<ApiAllTypes, 'UserAuthActions' | 'UserPassActions'>
 export type UserAuthActionsPicked = Pick<ApiAllTypes, 'UserAuthActions'>;
-export type UserCexAccountActionsPicked = Pick<ApiAllTypes, 'UserCexAccountActions'>;
 export type UserPassActionsPicked = Pick<ApiAllTypes, 'UserPassActions'>;

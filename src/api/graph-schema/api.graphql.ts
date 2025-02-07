@@ -16,20 +16,13 @@ type UserAuthed {
   userMeta: UserMeta!
 }
 
-type UserCexAccountActions {
-  addAccount(input: UserLoginInput!): UserId
-  editAccount(input: UserLoginInput!): UserId
-  removeAccount(input: UserLoginInput!): UserId
-}
-
 input UserChangePasswordInput {
   confirmPassword: String!
-  id: ID!
   password: String!
 }
 
 type UserId {
-  id: ID!
+  id: Int!
 }
 
 input UserLoginInput {
@@ -38,13 +31,12 @@ input UserLoginInput {
 }
 
 type UserMeta {
-  id: ID!
+  id: Int!
   nick: String!
 }
 
 type UserMutations {
   auth: UserAuthActions!
-  cexAccount: UserCexAccountActions!
   password: UserPassActions!
 }
 

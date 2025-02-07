@@ -1,7 +1,0 @@
-
-
-type UserCexAccountActions {
-    addAccount(input: UserLoginInput!): UserId
-    editAccount(input: UserLoginInput!): UserId
-    removeAccount(input: UserLoginInput!): UserId
-}

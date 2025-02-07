@@ -10,7 +10,7 @@ input UserRegisterInput  {
 }
 
 type UserMeta {
-    id: ID!
+    id: Int!
     nick: String!
 }
 type UserAuthed {

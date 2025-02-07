@@ -1,6 +1,5 @@
 type UserMutations {
     auth: UserAuthActions!
-    cexAccount: UserCexAccountActions!
     password: UserPassActions!
 }
 
