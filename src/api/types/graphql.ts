@@ -268,7 +268,7 @@ export type UserPassMutationsResolvers<ContextType = ApiContext, ParentType = Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ApiResolvers<ContextType = ApiContext> = {
+export type ApiAllTypes<ContextType = ApiContext> = {
   Mutation: MutationResolvers<ContextType>;
   UserAuthMutations: UserAuthMutationsResolvers<ContextType>;
   UserAuthed: UserAuthedResolvers<ContextType>;
@@ -279,7 +279,8 @@ export type ApiResolvers<ContextType = ApiContext> = {
   UserPassMutations: UserPassMutationsResolvers<ContextType>;
 };
 
-export type UserAuthMutationsPicked = Pick<ApiResolvers, 'UserAuthMutations'>;
-export type UserCexAccountMutationsPicked = Pick<ApiResolvers, 'UserCexAccountMutations'>;
-export type UserMutationsPicked = Pick<ApiResolvers, 'UserMutations'>;
-export type UserPassMutationsPicked = Pick<ApiResolvers, 'UserPassMutations'>;
+export type ApiResolvers = Pick<ApiAllTypes, 'UserAuthMutations' | 'UserCexAccountMutations' | 'UserMutations' | 'UserPassMutations'>
+export type UserAuthMutationsPicked = Pick<ApiAllTypes, 'UserAuthMutations'>;
+export type UserCexAccountMutationsPicked = Pick<ApiAllTypes, 'UserCexAccountMutations'>;
+export type UserMutationsPicked = Pick<ApiAllTypes, 'UserMutations'>;
+export type UserPassMutationsPicked = Pick<ApiAllTypes, 'UserPassMutations'>;

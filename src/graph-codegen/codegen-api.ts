@@ -25,7 +25,7 @@ const config: CodegenConfig = {
         contextType: "./context.ts#ApiContext",
         useTypeImports: true,
         avoidOptionals: true,
-        allResolversTypeName: "ApiResolvers",
+        allResolversTypeName: "ApiAllTypes",
         resolverTypeWrapperSignature: "T",
         skipTypename: true,
         allowParentTypeOverride: true,

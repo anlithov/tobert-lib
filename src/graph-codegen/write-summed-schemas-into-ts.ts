@@ -36,11 +36,12 @@ export const writeSummedSchemasIntoTs = async (
       },
     });
 
+    const apiType = `export type ApiResolvers = Pick<ApiAllTypes, '${typeNames.join("' | '")}'>\n`;
     const additionalTypes = typeNames
-      .map((typename) => `export type ${typename}Picked = Pick<ApiResolvers, '${typename}'>;`)
+      .map((typename) => `export type ${typename}Picked = Pick<ApiAllTypes, '${typename}'>;`)
       .join("\n");
 
-    await Deno.writeTextFile('src/api/types/graphql.ts', additionalTypes, {
+    await Deno.writeTextFile('src/api/types/graphql.ts', apiType + additionalTypes, {
       append: true
     });
 
