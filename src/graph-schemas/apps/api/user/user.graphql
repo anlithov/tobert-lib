@@ -1,7 +1,7 @@
 type UserMutations {
-    auth: UserAuthMutations!
-    cexAccount: UserCexAccountMutations!
-    password: UserPassMutations!
+    auth: UserAuthActions!
+    cexAccount: UserCexAccountActions!
+    password: UserPassActions!
 }
 
 extend type Mutation {

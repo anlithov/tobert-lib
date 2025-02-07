@@ -6,7 +6,7 @@ type Mutation {
   user: UserMutations!
 }
 
-type UserAuthMutations {
+type UserAuthActions {
   login(input: UserLoginInput!): UserAuthed!
   register(input: UserLoginInput!): UserAuthed!
 }
@@ -16,7 +16,7 @@ type UserAuthed {
   userMeta: UserMeta!
 }
 
-type UserCexAccountMutations {
+type UserCexAccountActions {
   addAccount(input: UserLoginInput!): UserId
   editAccount(input: UserLoginInput!): UserId
   removeAccount(input: UserLoginInput!): UserId
@@ -43,12 +43,12 @@ type UserMeta {
 }
 
 type UserMutations {
-  auth: UserAuthMutations!
-  cexAccount: UserCexAccountMutations!
-  password: UserPassMutations!
+  auth: UserAuthActions!
+  cexAccount: UserCexAccountActions!
+  password: UserPassActions!
 }
 
-type UserPassMutations {
+type UserPassActions {
   changePassword(input: UserLoginInput!): UserId!
 }
 

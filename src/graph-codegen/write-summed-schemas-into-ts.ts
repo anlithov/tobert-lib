@@ -30,7 +30,7 @@ export const writeSummedSchemasIntoTs = async (
 
     visit(ast, {
       ObjectTypeDefinition(node: ObjectTypeDefinitionNode) {
-        if (node.name.value.includes("Queries") || node.name.value.includes("Mutations")) {
+        if (node.name.value.includes("Read") || node.name.value.includes("Actions")) {
           typeNames.push(node.name.value);
         }
       },
